@@ -6,6 +6,215 @@
     <title>买了么店铺详情</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* 所有之前的样式保持不变，只添加和修改新样式 */
+        
+        /* 新增：复制按钮样式 */
+        .copy-btn {
+            background-color: #10b981;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+        
+        .copy-btn:hover {
+            background-color: #0da271;
+        }
+        
+        .copy-btn.small {
+            padding: 5px 10px;
+            font-size: 0.9rem;
+        }
+        
+        /* 修改：主页联系信息样式 - 改为横向排列，尺寸更小 */
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+        
+        .contact-card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            width: 220px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .contact-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .contact-details {
+            font-size: 1rem;
+            color: #475569;
+            margin-bottom: 12px;
+            padding: 8px;
+            background-color: #f1f5f9;
+            border-radius: 6px;
+            font-weight: 600;
+        }
+        
+        /* 新增：名单详情样式 */
+        .list-details {
+            margin-top: 15px;
+            padding: 15px;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid #f59e0b;
+        }
+        
+        .list-details.black {
+            border-left-color: #ef4444;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 1px dashed #e2e8f0;
+        }
+        
+        .detail-row:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .detail-label {
+            font-weight: 600;
+            color: #475569;
+        }
+        
+        .detail-value {
+            color: #1e293b;
+        }
+        
+        /* 新增：多个链接容器样式 */
+        .links-container {
+            margin-top: 20px;
+        }
+        
+        .links-container h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: #1e293b;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .link-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #f8fafc;
+            border-radius: 6px;
+            margin-bottom: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .link-text {
+            font-family: monospace;
+            color: #3b82f6;
+            word-break: break-all;
+            font-size: 0.9rem;
+            flex: 1;
+            margin-right: 10px;
+        }
+        
+        /* 新增：复制成功提示 */
+        .copy-notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #10b981;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideIn 0.3s ease, fadeOut 0.3s ease 2s forwards;
+            max-width: 300px;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+        
+        /* 修改结果框样式以容纳更多内容 */
+        .result-box {
+            padding: 25px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+        
+        .result-box.show {
+            display: block;
+        }
+        
+        .result-safe {
+            background-color: #dcfce7;
+            color: #166534;
+            border-left: 5px solid #22c55e;
+        }
+        
+        .result-gray {
+            background-color: #fef3c7;
+            color: #92400e;
+            border-left: 5px solid #f59e0b;
+        }
+        
+        .result-black {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border-left: 5px solid #ef4444;
+        }
+        
+        /* 之前的其他样式保持不变 */
         * {
             margin: 0;
             padding: 0;
@@ -123,7 +332,7 @@
         
         .home-page {
             text-align: center;
-            padding: 60px 20px;
+            padding: 40px 20px;
         }
         
         .home-title {
@@ -140,7 +349,7 @@
             font-size: 1.2rem;
             color: #64748b;
             max-width: 700px;
-            margin: 0 auto 50px;
+            margin: 0 auto 30px;
         }
         
         /* 新增：模块网格样式 */
@@ -452,35 +661,6 @@
         
         .check-btn:hover {
             background-color: #2563eb;
-        }
-        
-        .result-box {
-            padding: 25px;
-            border-radius: 8px;
-            margin-top: 20px;
-            display: none;
-        }
-        
-        .result-box.show {
-            display: block;
-        }
-        
-        .result-safe {
-            background-color: #dcfce7;
-            color: #166534;
-            border-left: 5px solid #22c55e;
-        }
-        
-        .result-gray {
-            background-color: #fef3c7;
-            color: #92400e;
-            border-left: 5px solid #f59e0b;
-        }
-        
-        .result-black {
-            background-color: #fee2e2;
-            color: #991b1b;
-            border-left: 5px solid #ef4444;
         }
         
         .result-title {
@@ -798,6 +978,16 @@
             .detail-btn {
                 width: 100%;
             }
+            
+            .contact-info {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .contact-card {
+                width: 100%;
+                max-width: 300px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -875,6 +1065,25 @@
             <div class="home-page">
                 <h1 class="home-title">买了么店铺</h1>
                 <p class="home-subtitle">| 售卖美工美化素材店铺 | 群号:828795757 | 店长灰太狼:2785459945 |</p>
+                
+                <!-- 修改：联系信息区域 - 横向排列，尺寸更小 -->
+                <div class="contact-info">
+                    <div class="contact-card">
+                        <h3><i class="fas fa-user"></i> 店长QQ</h3>
+                        <div class="contact-details">2785459945</div>
+                        <button class="copy-btn" data-text="2785459945">
+                            <i class="fas fa-copy"></i> 复制QQ号
+                        </button>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <h3><i class="fas fa-users"></i> 店铺QQ号</h3>
+                        <div class="contact-details">828795757</div>
+                        <button class="copy-btn" data-text="828795757">
+                            <i class="fas fa-copy"></i> 复制群号
+                        </button>
+                    </div>               
+                </div>
                 
                 <div class="module-grid">
                     <div class="module-card" style="border-top-color: #3b82f6;" data-page="onsale">
@@ -1093,6 +1302,12 @@
         </div>
     </div>
 
+    <!-- 复制成功提示 -->
+    <div id="copyNotification" class="copy-notification" style="display: none;">
+        <i class="fas fa-check-circle"></i>
+        <span id="copyMessage">已复制到剪贴板</span>
+    </div>
+
     <script>
         // =============================================
         // 商品数据 - 在这里添加您的商品！
@@ -1106,7 +1321,6 @@
                     description: "仅线上美工，使用请注意查看宣图使用规则", 
                     price: "¥2", 
                     img: "https://s41.ax1x.com/2025/12/30/pZNirK1.jpg", 
-                    // 多图支持：可以添加images数组，如果不提供则使用img作为唯一图片
                     images: [
                         "https://s41.ax1x.com/2025/12/30/pZNirK1.jpg",
                     ],
@@ -1442,8 +1656,7 @@
                     link: "https://docs.qq.com/form/page/DZXV2QmVCZk5oVGdq",
                     linkText: "立即购买"
                 },
-                // 在这里添加更多在售商品...
-                // 复制上面的代码块，修改id、name、description、price、img、images、features、link等
+                // ... 其他商品数据保持不变
             ],
             soldout: [
                 { 
@@ -1614,28 +1827,79 @@
                     linkText: "不用填链接"
                 },
                 // 在这里添加更多福利商品...
+                // ... 福利商品数据保持不变
             ]
         };
 
         // =============================================
         // 转让数据 - 在这里添加转让记录！
-        // 格式：id, 转让者, 转让者QQ, 接收者, 接收者QQ, 素材信息, 状态, 发布时间
-        // 注意：状态统一为"已公示"，按时间倒序排列（最近的时间在最前面）
         // =============================================
         const transferData = [
-            { id: 1, user: "示例", qq: "QQ号", receiver: "示例", receiverQQ: "QQ号", item: "素材名称", date: "202x-xx-xx" },
-            
+            { id: 1, user: "示例", qq: "123456", receiver: "示例", receiverQQ: "111111", item: "素材名字", date: "2025-12-31" },
         ];
 
         // =============================================
-        // 灰名单数据 - 在这里添加灰名单QQ号！
+        // 灰名单数据 - 支持为每个QQ号添加多个链接
         // =============================================
-        const grayList = ["3670314251", "1400643471", "333333"];
+        const grayList = [
+            { 
+                qq: "3670314251", 
+                reason: "云朵泡芙2.0上车不付款拖车至掉落", 
+                count: 1, 
+                date: "2025-12-28",
+                // 为该QQ号添加多个链接
+                links: [
+                    { name: "查共群", url: "https://ti.qq.com/friends/recall?uin=3670314251" }
+                ]
+            },
+            { 
+                qq: "1400643471", 
+                reason: "云朵泡芙2.0上车不付款拖车至掉落", 
+                count: 1, 
+                date: "2025-12-28",
+                links: [
+                    { name: "查共群", url: "https://ti.qq.com/friends/recall?uin=1400643471" }
+                ]
+            },
+        ];
 
         // =============================================
-        // 黑名单数据 - 在这里添加黑名单QQ号！
+        // 黑名单数据 - 支持为每个QQ号添加多个链接
         // =============================================
-        const blackList = ["3693390831", "1506326310", "1460944778"];
+        const blackList = [
+            { 
+                qq: "3693390831", 
+                reason: "未填表付款，申请进鱼干2.0发货群", 
+                date: "2025-02-18",
+                links: [
+                    { name: "查共群", url: "https://ti.qq.com/friends/recall?uin=3693390831" }
+                ]
+            },
+            { 
+                qq: "1506326310", 
+                reason: "", 
+                date: "2025-01-20",
+                links: [
+                    { name: "查共群", url: "https://ti.qq.com/friends/recall?uin=1506326310" }
+                ]
+            },
+            { 
+                qq: "1460944778", 
+                reason: "在别家流图态度恶劣拒绝赔偿人品堪忧", 
+                date: "2024-08-05",
+                links: [
+                    { name: "查共群", url: "https://ti.qq.com/friends/recall?uin=1460944778" }
+                ]
+            },
+            { 
+                qq: "3116541485", 
+                reason: "违规转号转id涉嫌流图风险", 
+                date: "2026-01-01",
+                links: [
+                    { name: "查共群", url: "https://ti.qq.com/friends/recall?uin=3116541485" }
+                ]
+            }
+        ];
 
         // =============================================
         // 以下代码为功能代码，一般不需要修改
@@ -1651,6 +1915,7 @@
             initGrayListCheck();
             initBlackListCheck();
             initDetailModal();
+            initCopyButtons();
             
             // 导航按钮点击事件
             document.querySelectorAll(".nav-btn").forEach(button => {
@@ -1685,6 +1950,47 @@
             });
             
             window.scrollTo(0, 0);
+        }
+
+        // 初始化复制功能
+        function initCopyButtons() {
+            // 为所有复制按钮添加点击事件
+            document.addEventListener("click", function(e) {
+                if (e.target.closest(".copy-btn")) {
+                    const button = e.target.closest(".copy-btn");
+                    const text = button.getAttribute("data-text");
+                    if (text) {
+                        copyToClipboard(text);
+                        showCopyNotification(`已复制: ${text}`);
+                    }
+                }
+            });
+        }
+
+        // 复制文本到剪贴板
+        function copyToClipboard(text) {
+            const textarea = document.createElement("textarea");
+            textarea.value = text;
+            textarea.style.position = "fixed";
+            textarea.style.opacity = "0";
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textarea);
+        }
+
+        // 显示复制成功提示
+        function showCopyNotification(message) {
+            const notification = document.getElementById("copyNotification");
+            const messageSpan = document.getElementById("copyMessage");
+            
+            messageSpan.textContent = message;
+            notification.style.display = "flex";
+            
+            // 自动隐藏
+            setTimeout(() => {
+                notification.style.display = "none";
+            }, 2500);
         }
 
         // 初始化商品页面
@@ -2030,23 +2336,60 @@
                     return;
                 }
                 
-                if (grayList.includes(qq)) {
+                const grayItem = grayList.find(item => item.qq === qq);
+                
+                if (grayItem) {
                     grayResult.className = "result-box result-gray";
+                    
+                    // 生成链接HTML
+                    let linksHTML = '';
+                    if (grayItem.links && grayItem.links.length > 0) {
+                        linksHTML = `
+                            <div class="links-container">
+                                <h4><i class="fas fa-link"></i> 相关链接：</h4>
+                                ${grayItem.links.map(link => `
+                                    <div class="link-item">
+                                        <span class="link-text">${link.url}</span>
+                                        <button class="copy-btn small" data-text="${link.url}">
+                                            <i class="fas fa-copy"></i> 复制
+                                        </button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                    }
+                    
                     grayResult.innerHTML = `
                         <div class="result-title">
                             <i class="fas fa-user-clock"></i>
                             查询结果：在灰名单中
                         </div>
                         <p>QQ号 <strong>${qq}</strong> 存在于灰名单中。</p>
-                        <div class="result-details">
-                            <p><strong>可能原因：</strong></p>
-                            <ul style="margin-top: 5px; padding-left: 20px;">
-                                <li>无故跳车不付款</li>
-                                <li>少付款项</li>
-                                <li>其他轻微违规行为</li>
-                            </ul>
-                            <p style="margin-top: 10px; color: #ef4444;"><strong>注意：</strong>两次进入灰名单将自动加入黑名单</p>
+                        
+                        <div class="list-details">
+                            <div class="detail-row">
+                                <span class="detail-label">上灰原因：</span>
+                                <span class="detail-value">${grayItem.reason}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">上灰次数：</span>
+                                <span class="detail-value">${grayItem.count} 次</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">上灰时间：</span>
+                                <span class="detail-value">${grayItem.date}</span>
+                            </div>
                         </div>
+                        
+                        <div style="margin-top: 20px;">
+                            <p><strong>注意：</strong>两次进入灰名单将自动加入黑名单</p>
+                            ${grayItem.count >= 2 ? 
+                                '<p style="color: #ef4444; font-weight: 600;">该用户已上灰2次，下次违规将自动加入黑名单！</p>' : 
+                                `<p>该用户已上灰${grayItem.count}次，剩余${2 - grayItem.count}次机会。</p>`
+                            }
+                        </div>
+                        
+                        ${linksHTML}
                     `;
                 } else {
                     grayResult.className = "result-box result-safe";
@@ -2088,25 +2431,54 @@
                     return;
                 }
                 
-                if (blackList.includes(qq)) {
+                const blackItem = blackList.find(item => item.qq === qq);
+                
+                if (blackItem) {
                     blackResult.className = "result-box result-black";
+                    
+                    // 生成链接HTML
+                    let linksHTML = '';
+                    if (blackItem.links && blackItem.links.length > 0) {
+                        linksHTML = `
+                            <div class="links-container">
+                                <h4><i class="fas fa-link"></i> 相关链接：</h4>
+                                ${blackItem.links.map(link => `
+                                    <div class="link-item">
+                                        <span class="link-text">${link.url}</span>
+                                        <button class="copy-btn small" data-text="${link.url}">
+                                            <i class="fas fa-copy"></i> 复制
+                                        </button>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                    }
+                    
                     blackResult.innerHTML = `
                         <div class="result-title">
                             <i class="fas fa-user-slash"></i>
                             查询结果：在黑名单中
                         </div>
                         <p>QQ号 <strong>${qq}</strong> 存在于黑名单中。</p>
-                        <div class="result-details">
-                            <p><strong>可能原因：</strong></p>
-                            <ul style="margin-top: 5px; padding-left: 20px;">
-                                <li>严重违规行为</li>
-                                <li>两次灰名单记录</li>
-                                <li>恶意破坏交易秩序</li>
-                            </ul>
-                            <p style="margin-top: 10px; color: #ef4444; font-weight: 600;">
+                        
+                        <div class="list-details black">
+                            <div class="detail-row">
+                                <span class="detail-label">拉黑原因：</span>
+                                <span class="detail-value">${blackItem.reason}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">拉黑时间：</span>
+                                <span class="detail-value">${blackItem.date}</span>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-top: 20px;">
+                            <p style="color: #ef4444; font-weight: 600;">
                                 <strong>处理结果：</strong>该用户已被禁止购买买了么所有素材。
                             </p>
                         </div>
+                        
+                        ${linksHTML}
                     `;
                 } else {
                     blackResult.className = "result-box result-safe";
@@ -2127,11 +2499,4 @@
         }
     </script>
 </body>
-
 </html>
-
-
-
-
-
-
